@@ -1,0 +1,85 @@
+##################################################################################################
+# application configuration
+##################################################################################################
+info:
+  app:
+    artifact: 'jupiter-demo'
+    version: '0.0.1-SNAPSHOT'
+    name: 'jupiter-demo'
+    description: 'Demo project for Jupiter'
+
+##########################################################################################
+# Spring provide depending on -DAPP_ENV=stg/pre/live/local(default)
+##########################################################################################
+spring:
+  profiles:
+    active: ${APP_ENV:local}
+    #autoconfigure:
+    # exclude:
+    #  - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  # defining location for HSQLDB's data
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/myDb"
+    user: "tutorialuser"
+    pass: "tutorialpass"
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate  # none, create, create-drop, update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        jdbc:
+          time_zone: UTC
+          lob:
+            non_contextual_creation: true
+
+##########################################################################################
+# Monitoring and Management
+# https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html
+# allowed only info,health,loggers,prometheus-metrics
+# /actuator/
+# /actuator/health – summarises the health status of our application
+# /actuator/info – returns general information. It might be custom data, build information or details about the latest commit
+# /actuator/loggers – enables us to query and modify the logging level of our application
+# /actuator/prometheus – returns metrics like the previous one, but formatted to work with a Prometheus server
+##################################################################################################
+management:
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+    health:
+      show-details: "ALWAYS"
+  endpoints:
+    web:
+      exposure:
+        include: info,health,loggers,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  health:
+    ldap: # this health check doesn't work - see also https://github.com/spring-projects/spring-boot/issues/10558
+      enabled: false
+
+swaggerhost: ""
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 86400 # 1day
+
+hibernate:
+  cache:
+    use_second_level_cache: true
+    region:
+      factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+
+app:
+  runningInstance: ${HOSTNAME:${USER:USERNAME}}
+    

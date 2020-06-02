@@ -1,0 +1,8 @@
+com/dasburo/sample/jupiter/demo/DemoApplication.class
+com/dasburo/sample/jupiter/demo/Assertions.class
+com/dasburo/sample/jupiter/demo/persistence/Model.class
+com/dasburo/sample/jupiter/demo/service/ModelService.class
+com/dasburo/sample/jupiter/demo/configuration/PersistenceConfiguration.class
+com/dasburo/sample/jupiter/demo/persistence/Model$ModelBuilder.class
+com/dasburo/sample/jupiter/demo/service/ModelServiceImpl.class
+com/dasburo/sample/jupiter/demo/persistence/ModelRepository.class
